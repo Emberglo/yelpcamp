@@ -1,17 +1,41 @@
 <%- include("partials/header") %>
 
-<h1>campgrounds page</h1>
-<a href="/">home</a>
-<a href="/views/campgrounds/new">Submit A New Campground</a>
+<div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <h1>Welcome to YelpCamp</h1>
+            <p>View Hand-picked Campgrounds</p>
+            <div>
+                <a class="btn btn-primary btn-lg" href="/campgrounds/new">Submit A New Campground</a>
+            </div>
+        </div>
+    </header>
 
-<% campgrounds.forEach(function(campground){ %>
-    <div>
-        <h4><%= campground.name %></div>
-        <!--ejs tags have to go inside of quotes of img src-->
-        <img src="<%= campground.image %>" alt="image of campground">
+    <a href="/">home</a>
+
+    <div class="row text-center" style="display: flex; flex-wrap: wrap;">
+        <div class="col-lg-12">
+            <h3>Featured Campgrounds</h3>
+        </div>
+        <div>
+            <% campgrounds.forEach(function(campground){ %>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-img-top">
+                            <!--ejs tags have to go inside of quotes of img src-->
+                            <img src="<%= campground.image %>" alt="image of campground" style="max-width: 300px; max-height: auto;">
+                        </div>
+                        <div class="card-title">
+                            <h4>
+                                <%= campground.name %>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
     </div>
-<% }); %>
-
+</div>
 
 
 <%- include("partials/footer") %>

@@ -1,9 +1,11 @@
 //import express
-var express = require('express');
+const express = require('express');
 //make an express app
-var app = express();
+const app = express();
 //require body-parser
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
+//require mongodb
+const mongoDB = require('mongodb');
 
 //tell express to use body-parser
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -12,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
 //array to temporarily hold campground data
-var campgrounds = [
+const campgrounds = [
 	{
 		name  : 'Salmon Creek',
 		image :
@@ -44,10 +46,10 @@ app.get('/campgrounds', function(req, res) {
 //route for submitting form for new campground
 app.post('/campgrounds', function(req, res) {
 	//get data from form
-	var name = req.body.name;
-	var image = req.body.image;
+	const name = req.body.name;
+	const image = req.body.image;
 	//create new campground object
-	var newCampground = { name: name, image: image };
+	const newCampground = { name: name, image: image };
 	//push data into new campground object
 	campgrounds.push(newCampground);
 	//redirect back to campground page
@@ -62,4 +64,14 @@ app.get('/campgrounds/new', function(req, res) {
 //set up server
 app.listen(process.env.PORT || 5000, process.env.IP, function() {
 	console.log('yelpcamp server started');
+});
+
+//trying to figure out how to hook up a mongodb database
+const MongoClient = require('mongodb').MongoClient;
+const uri = 'mongodb+srv://ryan:adelaide@cluster0.cr44o.mongodb.net/icampid?retryWrites=true&w=majority';
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect((err) => {
+	const collection = client.db('test').collection('devices');
+	// perform actions on the collection object
+	client.close();
 });
